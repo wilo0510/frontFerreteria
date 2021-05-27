@@ -1,4 +1,12 @@
 module.exports = {
+  common:{
+    addItem     : "Añadir Producto(s)",
+    deleteItem  : "Eliminar Producto(s)",
+    search      : "Buscar",
+    empty_data  : "Sin datos",
+    cancel      : "Cancelar" ,
+    print       : "Impirmir"   
+  },
   "sidebar": {
     "title": "DISMEC",
     "shortTitle": "CT",
@@ -37,5 +45,13 @@ module.exports = {
     "widgets": "Widgets",
     "charts": "Charts",
     "calendar": "Calendar"
+  },
+  tirillas:{
+    selectPrinter : "Seleccione impresora",
+    welcome       : "Bienvenid@ a la impresión de tirillas, por favor seleccione la impresora de preferencia, a continuación podrá añadir o eliminar los productos que desee y finalmente podrá imprimir la tirilla correspondiente a la venta",
+    nameProduct   : "Nombre del producto",
+    unitPrice     : "Precio unitario",
+    quantity      : "Cantidad",
+    total         : "Total"
   }
 }

@@ -34,6 +34,13 @@ export default {
       class: '' // Add `white-content` class here to enable "white" mode.
     }
   },
+  body:{
+    script:[
+      {src  : "/zip.js"},
+      {src  : "/zip-ext.js"},
+      {src  : "/deflate.js"}
+    ]
+  },
   router: {
     linkExactActiveClass: 'active'
   },
@@ -55,6 +62,12 @@ export default {
   plugins: [
     `~/plugins/dashboard-plugin.js`
   ],
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.API_URL,
+    proxyHeaders: false,
+    credentials: false
+  },
   /*
   ** Nuxt.js dev-modules
   */
@@ -63,8 +76,10 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'nuxt-i18n'
+    'nuxt-i18n',
+    'vue-sweetalert2/nuxt'
   ],
   i18n: {
     locales: [
