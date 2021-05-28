@@ -19,7 +19,7 @@
     <div class="row justify-content-center" v-if="printerSelected!=null">
       <div class="col-12 row justify-content-center">
         <base-button type="primary" class="mr-2 animation-on-hover" @click="visibility.addItem=true; resetModal()">{{$t('common.addItem')}} </base-button>
-        <base-button type="danger" class="mr-2 animation-on-hover" :disabled="selectedItem.length==0">{{$t('common.deleteItem')}} </base-button>
+        <base-button type="danger" class="mr-2 animation-on-hover" :disabled="selectedItem.length==0" @click="deleteProducts">{{$t('common.deleteItem')}} </base-button>
         <base-button :disabled="items.length==0" @click="processTransaction()">{{$t('common.print')}}</base-button>      
       </div>
       <div class="col-12 row justify-content-center mt-2">
@@ -29,7 +29,7 @@
     </div>
     <div v-if="printerSelected!=null">
       <el-table
-      @selection-change="handleSelectionChange" 
+      @selection-change="changeItemsDelete" 
       :data="items"
       height="700">
         <el-table-column
@@ -200,6 +200,28 @@ export default {
     }
   },
   methods: {
+    deleteProducts(){
+      this.$swal.fire({
+        title: 'Realmente desea eliminar estos productos?',
+        showDenyButton: true,        
+        confirmButtonText: `Cancelar`,
+        denyButtonText: `Eliminar`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+       if (result.isDenied) {
+         let position=0
+         for(var i=0;i<this.selectedItem.length;i++){
+            position=this.getPosicionArreglo(this.selectedItem[i].id,this.items)
+            console.log(position)
+            this.items.splice(position,1)
+         }
+          
+        }
+      })
+    },
+    changeItemsDelete(val){
+      this.selectedItem = val;
+    },
     processTransaction(){
       this.print()
       this.cleanScreen()
