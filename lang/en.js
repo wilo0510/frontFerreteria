@@ -53,5 +53,8 @@ module.exports = {
     unitPrice     : "Precio unitario",
     quantity      : "Cantidad",
     total         : "Total"
+  },
+  inventarios:{
+    welcome :  "Este espacio está disponible para añadir y modificar los productos"
   }
 }

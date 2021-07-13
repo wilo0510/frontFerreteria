@@ -1,174 +1,111 @@
 <template>
   <div class="row">
-    <div class="col-md-6">
-      <card>
-        <h4 slot="header" class="card-title">Notifications Style</h4>
-
-        <base-alert type="info"> This is a plain notification</base-alert>
-
-        <base-alert type="info" dismissible>
-          This is a notification with close button.
-        </base-alert>
-
-        <base-alert type="info" dismissible icon="tim-icons icon-bell-55">
-          This is a notification with close button and icon.
-        </base-alert>
-
-        <base-alert type="info" dismissible icon="tim-icons icon-bell-55">
-          This is a notification with close button and icon and have many lines.
-          You can see that the icon and the close button are always vertically
-          aligned. This is a beautiful notification. So you don't have to worry
-          about the style.
-        </base-alert>
-      </card>
+    <div class="row justify-content-center w-100">
+      <h3 class="col-12">{{$t('inventarios.welcome')}}</h3>
+    </div>   
+    <div class="col-12 row justify-content-center">
+      <base-button type="primary" class="animation-on-hover" @click="visibility.addItem=true; resetModal()">{{$t('common.addItem')}} </base-button>
     </div>
-
-    <div class="col-md-6">
-      <card>
-        <h4 slot="header" class="card-title">Notification states</h4>
-
-        <base-alert type="primary" dismissible>
-          <span
-            ><b> Primary - </b> This is a regular notification made with
-            ".alert-primary"</span
-          >
-        </base-alert>
-
-        <base-alert type="info" dismissible>
-          <span
-            ><b> Info - </b> This is a regular notification made with
-            ".alert-info"</span
-          >
-        </base-alert>
-
-        <base-alert type="success" dismissible>
-          <span
-            ><b> Success - </b> This is a regular notification made with
-            ".alert-success"</span
-          >
-        </base-alert>
-
-        <base-alert type="warning" dismissible>
-          <span
-            ><b> Warning - </b> This is a regular notification made with
-            ".alert-warning"</span
-          >
-        </base-alert>
-
-        <base-alert type="danger" dismissible>
-          <span
-            ><b> Danger - </b> This is a regular notification made with
-            ".alert-danger"</span
-          >
-        </base-alert>
-      </card>
-    </div>
-    <div class="col-md-12">
-      <card class="text-center">
-        <div class="places-buttons">
-          <div class="row">
-            <div class="col-md-6 ml-auto mr-auto text-center">
-              <h4 class="card-title">
-                Notifications Places
-                <p class="category">Click to view notifications</p>
-              </h4>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-8 ml-auto mr-auto">
-              <div class="row">
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('top', 'left')"
-                    >Top Left
-                  </base-button>
-                </div>
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('top', 'center')"
-                    >Top Center
-                  </base-button>
-                </div>
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('top', 'right')"
-                    >Top Right
-                  </base-button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-8 ml-auto mr-auto">
-              <div class="row">
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('bottom', 'left')"
-                    >Bottom Left
-                  </base-button>
-                </div>
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('bottom', 'center')"
-                    >Bottom Center
-                  </base-button>
-                </div>
-                <div class="col-md-4">
-                  <base-button
-                    type="primary"
-                    block
-                    @click.native="notifyVue('bottom', 'right')"
-                    >Bottom Right
-                  </base-button>
-                </div>
-              </div>
-            </div>
-          </div>
+    <modal
+    :show.sync    ="visibility.addItem"
+    modalClasses  ="modal-xl"
+    gradient      ="default"  
+    >
+      <div slot="header">
+        <h3 class="modal-title  text-light mb-4" id="modal-title-default">{{$t('common.addItem')}}</h3>
+      </div>
+      <div class="row justify-content-center">
+        <base-input 
+          class="text-light "
+          :label="$t('tirillas.nameProduct')"
+          type="text"
+          :placeholder="$t('tirillas.nameProduct')"
+          v-model="nameProduct">
+        </base-input>
+        <base-input 
+          class="text-light ml-3"
+          :label="$t('tirillas.unitPrice')"
+          type="number"
+          :placeholder="$t('tirillas.unitPrice')"
+          v-model="priceProduct">
+        </base-input>
+        <base-input 
+          class="text-light ml-3"
+          :label="$t('tirillas.quantity')"
+          type="number"
+          :placeholder="$t('tirillas.quantity')"
+          v-model="quantityProduct">
+        </base-input>
+      </div>
+        <div class="ml-auto" slot="footer">  
+            <base-button class="animation-on-hover" type="success" @click="addItem()">{{$t('common.addItem')}}</base-button>
+            <base-button class="animation-on-hover" type="danger" @click="visibility.addItem=false; ">{{$t('common.cancel')}}</base-button>
         </div>
-      </card>
-    </div>
+    </modal>
   </div>
 </template>
 <script>
-import { BaseAlert } from '@/components';
 
+import {Modal,BaseAlert} from '@/components'
 export default {
-  name: 'notifications',
   components: {
-    BaseAlert
+    BaseAlert,
+    Modal
   },
+  name: 'notifications',
+  
   data() {
     return {
-      type: ['', 'info', 'success', 'warning', 'danger'],
-      notifications: {
-        topCenter: false
+      visibility:{
+        addItem : false
       },
+      nameProduct     : '',
+      priceProduct    : '',
+      quantityProduct :  ''
     };
   },
   methods: {
-    notifyVue(verticalAlign, horizontalAlign) {
-      let color = Math.floor(Math.random() * 4 + 1);
-      this.$notify({
-        message:
-          'Welcome to <b>Vue Black Dashboard Pro</b> - a beautiful resource for every web developer',
-        timeout: 30000,
-        icon: 'tim-icons icon-bell-55',
-        horizontalAlign: horizontalAlign,
-        verticalAlign: verticalAlign,
-        type: this.type[color]
-      });
+    async addItem(){
+      if(this.nameProduct==''||this.priceProduct==''||this.quantityProduct==''){
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Llene todos los campos por favor !',
+          
+        })
+      }else{
+        try {
+          let params={
+            product_name  : this.nameProduct,
+            price_product : this.priceProduct,
+            quantity_product: this.quantityProduct
+          }
+          this.productsResult = await this.$axios.$post('/product',params)
+          this.$swal.fire({  
+            icon: 'success',
+            title: 'El producto ha sido añadido con exito',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.visibility.addItem=false
+          this.resetModal 
+        } catch (error) {
+           this.$swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Ya existe un producto con este nombre !'            
+          })
+          this.visibility.addItem=false
+        }
+      }
+    },
+    resetModal(){
+      this.nameProduct=''
+      this.quantityProduct=''
+      this.priceProduct=''
     }
   }
+
 };
 </script>
 <style>
